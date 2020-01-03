@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="../src/cssanimator.js"></script>
+    <script src="js/simples.js"></script>
+</head>
+<body>
+<div id="app">
+    <div id="panel">
+        <button onclick="onStart()">Start</button>
+        <button onclick="onStop()">Stop</button>
+        <button onclick="onRestart()">Restart</button>
+        <button onclick="onPause()">Pause</button>
+    </div>
+    <div id="canvas">
+        <div class="box one" style="z-index: 1; display: block;"></div>
+        <div class="box two"></div>
+    </div>
+</div>
+<script>
+    const one = document.querySelector('.one');
+    const two = document.querySelector('.two');
+    // one.addEventListener('click')
+    // element one
+    const oneAnim = CssAnimator(one);
+    oneAnim.duration('5s');
+    // oneAnim.state('paused');
+    oneAnim.from({
+        'top': '0',
+        'left': '0',
+    });
+    oneAnim.step('50%', {
+        'top': '0',
+        'left': 'calc(80% - 100px)',
+    });
+    oneAnim.step('70%', {
+        'top': '100px',
+    });
+    oneAnim.step('90%', {
+        'top': '0',
+        'left': 'calc(80% - 100px)',
+    });
+    oneAnim.to({
+        'top': '0',
+        'left': 0,
+    });
+    oneAnim.run();
+
+    // element two
+    const twoAnim = CssAnimator(two);
+    twoAnim.duration('3s');
+    twoAnim.from({
+        'margin-left': 0,
+    });
+    twoAnim.step('50%', {
+        'margin-top': '100px',
+        'margin-left': 'calc(80% - 100px)',
+    });
+    twoAnim.step('70%', {
+        'margin-top': '0px',
+    });
+    twoAnim.step('90%', {
+        'margin-top': '100px',
+        'margin-left': 'calc(80% - 100px)',
+    });
+    twoAnim.to({
+        'margin-top': '100px',
+        'margin-left': 0,
+    });
+
+    // added element two for play after one
+    oneAnim.after(twoAnim);
+
+    // actions
+    function onStart() {
+        oneAnim.run();
+    }
+    function onStop() {
+        oneAnim.stop();
+    }
+    function onRestart() {
+        oneAnim.stop();
+        setTimeout(() => oneAnim.run(), 100)
+    }
+    function onPause() {
+        oneAnim.pause();
+    }
+</script>
+</body>
+</html>
