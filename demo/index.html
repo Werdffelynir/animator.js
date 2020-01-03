@@ -28,8 +28,8 @@
     // one.addEventListener('click')
     // element one
     const oneAnim = animator(one);
-    oneAnim.duration('3s');
-    oneAnim.state('paused');
+    oneAnim.duration('5s');
+    // oneAnim.state('paused');
     oneAnim.from({
         'top': '0',
         'left': '0',
@@ -73,7 +73,7 @@
     });
 
     // added element two for play after one
-    oneAnim.after(twoAnim);
+    // oneAnim.after(twoAnim);
 
     // actions
     function onStart() {

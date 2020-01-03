@@ -52,8 +52,8 @@ function animator (element) {
     };
     proto.run = function () {
         const styleElement = document.createElement('style');
+        proto.stop();
         createStyle();
-
         proto.element.id = proto.id_element;
         styleElement.id = proto.id_style;
         styleElement.textContent = proto.styles;
@@ -88,9 +88,10 @@ function animator (element) {
 
     proto.pause = function () {
         if ( getComputedStyle(proto.element)['animation-play-state'] === 'running') {
-            proto.element.style['animation-play-state'] = 'running';
-        } else {
+            clearTimeout(internal.timerHandler);
             proto.element.style['animation-play-state'] = 'paused';
+        } else {
+            proto.element.style['animation-play-state'] = 'running';
         }
         return proto;
     };
