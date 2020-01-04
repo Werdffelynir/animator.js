@@ -74,10 +74,10 @@ function CssAnimator (element, config) {
     this.pause = function () {
         if (this.isInit()) {
             if (this._elementComputedStyle('animation-play-state') === 'running') {
-                this.param.stylesElement['animation-play-state'] = 'paused';
-                this._runAfterTimerClear();
+                this._addStyle2Element('animation-play-state', 'paused');
+                this._runAfterTimerHandlerClear();
             } else {
-                this.param.stylesElement['animation-play-state'] = 'running';
+                this._addStyle2Element('animation-play-state', 'running');
                 this._runAfter();
             }
             this._cssElementInsert();
@@ -94,9 +94,8 @@ function CssAnimator (element, config) {
     };
 
 
-
     /* Internal */
-    this._runAfterTimerClear = function () {
+    this._runAfterTimerHandlerClear = function () {
         clearTimeout(this.param.timerHandler);
     };
     this._runAfter = function () {
@@ -109,12 +108,15 @@ function CssAnimator (element, config) {
             ? parseInt(animation.delay) * 1000
             : parseInt(animation.delay);
 
-        this._runAfterTimerClear();
-        this.param.timerHandler = setTimeout(function () {
-            afters.forEach(function (callback) {
-                callback.run();
-            });
-        }, sec + delay);
+        this._runAfterTimerHandlerClear();
+        if (this.param.animation['iteration-count'].indexOf('infinite') === -1 )
+            this.param.timerHandler = setTimeout( () => {
+                afters.forEach(function (callback) {
+                    callback.run();
+                });
+                // todo: test for removed style
+                this._cssRemove();
+            }, sec + delay);
     };
     this._cssCreate = function () {
         const {keyframes, keyframesName, classNameElement, animation} = this.param;
@@ -190,6 +192,10 @@ function CssAnimator (element, config) {
     this._elementComputedStyle = function (name) {
         return getComputedStyle(this.param.element)[name];
     };
+    this._addStyle2Element = function (name, prop) {
+        if (name && prop)
+            this.param.stylesElement[name] = prop;
+    };
 
     this._init = function () {
         this._cssElementRead();
@@ -218,3 +224,17 @@ CssAnimator.prototype.iteration = function(param) { this.parameter ('iteration-c
 CssAnimator.prototype.direction = function(param) { this.parameter ('direction', param); return this;};
 CssAnimator.prototype.fill = function(param) { this.parameter ('fill-mode', param); return this;};
 CssAnimator.prototype.state = function(param) { this.parameter ('play-state', param); return this;};
+
+
+CssAnimator.CssValue = function(param, separator, end) {
+    let result = '';
+    separator = separator || CssAnimator.CssValue.SEPARATOR;
+    end = end || CssAnimator.CssValue.VALUE_END;
+    Object.keys(param).forEach((key) => {
+        result += key + separator + param[key] + end
+    });
+    return result;
+};
+CssAnimator.CssValue.SEPARATOR = '';
+CssAnimator.CssValue.VALUE_END = ' ';
+

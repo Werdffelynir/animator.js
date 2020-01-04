@@ -36,6 +36,7 @@ animator.js
 
 #### `animator.iteration(1)`
 > number of repeat
+> 2 | 0 | 1.5 | infinite | 2, 0, infinite
 
 #### `animator.direction('normal')`
 > sets whether an animation should play forwards, backwards, or alternating back and forth.
