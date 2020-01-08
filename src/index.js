@@ -1,7 +1,7 @@
 
-function CssAnimator (element, config) {
-    if (!(this instanceof CssAnimator))
-        return new CssAnimator (element, config || {});
+function Index (element, config) {
+    if (!(this instanceof Index))
+        return new Index (element, config || {});
 
     if (!(element instanceof Node ))
         throw new Error('Element is not NodeElement');
@@ -221,24 +221,24 @@ function CssAnimator (element, config) {
     this._init();
 }
 
-CssAnimator.prototype.duration = function(param) { this.parameter ('duration', param); return this;};
-CssAnimator.prototype.effect = function(param) { this.parameter ('timing-function', param); return this;};
-CssAnimator.prototype.delay = function(param) { this.parameter ('delay', param); return this;};
-CssAnimator.prototype.iteration = function(param) { this.parameter ('iteration-count', param); return this;};
-CssAnimator.prototype.direction = function(param) { this.parameter ('direction', param); return this;};
-CssAnimator.prototype.fill = function(param) { this.parameter ('fill-mode', param); return this;};
-CssAnimator.prototype.state = function(param) { this.parameter ('play-state', param); return this;};
+Index.prototype.duration = function(param) { this.parameter ('duration', param); return this;};
+Index.prototype.effect = function(param) { this.parameter ('timing-function', param); return this;};
+Index.prototype.delay = function(param) { this.parameter ('delay', param); return this;};
+Index.prototype.iteration = function(param) { this.parameter ('iteration-count', param); return this;};
+Index.prototype.direction = function(param) { this.parameter ('direction', param); return this;};
+Index.prototype.fill = function(param) { this.parameter ('fill-mode', param); return this;};
+Index.prototype.state = function(param) { this.parameter ('play-state', param); return this;};
 
 
-CssAnimator.CssValue = function(param, separator, end) {
+Index.CssValue = function(param, separator, end) {
     let result = '';
-    separator = separator || CssAnimator.CssValue.SEPARATOR;
-    end = end || CssAnimator.CssValue.VALUE_END;
+    separator = separator || Index.CssValue.SEPARATOR;
+    end = end || Index.CssValue.VALUE_END;
     Object.keys(param).forEach((key) => {
         result += key + separator + param[key] + end
     });
     return result;
 };
-CssAnimator.CssValue.SEPARATOR = '';
-CssAnimator.CssValue.VALUE_END = ' ';
+Index.CssValue.SEPARATOR = '';
+Index.CssValue.VALUE_END = ' ';
 

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/demo/css/grid.css">
     <link rel="stylesheet" href="/demo/css/simples.css">
 
-    <script src="../src/cssanimator.js"></script>
+    <script src="../dist/cssanimator.bundle.js"></script>
     <script src="/demo/js/simples.js"></script>
 </head>
 <body>
@@ -28,14 +28,14 @@
 
 
     // element one
-    const oneAnim = CssAnimator(one);
+    const oneAnim = Index(one);
     oneAnim.duration('2s');
     oneAnim.iteration('infinite');
     oneAnim.from({
         'transform': 'rotate(0deg)',
     });
     oneAnim.step('50%', {
-        'transform': CssAnimator.CssValue({
+        'transform': Index.CssValue({
             scaleX: '(0.8)',
             scaleY: '(0.8)',
             rotate: '(180deg)',
@@ -49,14 +49,14 @@
 
 
     // element two
-    const twoAnim = CssAnimator(two);
+    const twoAnim = Index(two);
     twoAnim.duration('2s');
     twoAnim.iteration('infinite');
     twoAnim.from({
         'transform': 'rotate(0deg)',
     });
     twoAnim.step('50%', {
-        'transform': CssAnimator.CssValue({
+        'transform': Index.CssValue({
             scaleX: '(0.8)',
             scaleY: '(0.8)',
             rotate: '(-180deg)',
