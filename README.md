@@ -1,5 +1,6 @@
 animator.js
 ===========
+Simple CSS Animation
 
 ## Methods:
 
