@@ -18,8 +18,8 @@ animator.js
 #### `animator.stop()`
 > stop animation
 
-#### `animator.isPlay()`
-> return bool, true if animation in enter now
+#### `animator.isInit()`
+> return bool, true if animation is was run
 
 #### `animator.after([animator])`
 > run new animator object after end current

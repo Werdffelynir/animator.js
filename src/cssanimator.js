@@ -85,10 +85,6 @@ function CssAnimator (element, config) {
         return this;
     };
 
-    this.isPlay = function () {
-        return this.isInit();
-    };
-
     this.isInit = function () {
         return !!document.querySelector('.' + this.param.classNameStyleElement);
     };
@@ -141,11 +137,13 @@ function CssAnimator (element, config) {
     };
     this._cssInsert = function () {
         const {element, classNameElement, classNameStyleElement, stylesHead} = this.param;
-        const style = document.createElement('style');
-        element.classList.add(classNameElement);
-        style.classList.add(classNameStyleElement);
-        style.textContent = stylesHead;
-        document.head.appendChild(style);
+        if (!query('.' + classNameElement) && !query('.' + classNameStyleElement)) {
+            const style = document.createElement('style');
+            element.classList.add(classNameElement);
+            style.classList.add(classNameStyleElement);
+            style.textContent = stylesHead;
+            document.head.appendChild(style);
+        }
     };
     this._cssRemove = function () {
         const {element, classNameElement, classNameStyleElement} = this.param;
@@ -205,6 +203,12 @@ function CssAnimator (element, config) {
     /* Utils */
     const query = function (selector) {
         return document.querySelector(selector);
+    };
+    const attr = function (element, attr, value) {
+        if (value !== undefined)
+            return element.setAttribute(attr, value);
+        else
+            return element.getAttribute(attr);
     };
     const cssPart = function (name, params) {
         let style = ``;
