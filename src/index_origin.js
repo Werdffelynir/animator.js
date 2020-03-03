@@ -1,10 +1,10 @@
 
-function Animator (element, config) {
-    if (!(this instanceof Animator))
-        return new Animator (element, config || {});
+function Index (element, config) {
+    if (!(this instanceof Index))
+        return new Index (element, config || {});
 
     if (!(element instanceof Node ))
-        throw new Error('Animator say: target is not NodeElement');
+        throw new Error('Element is not NodeElement');
 
     const id = Math.random().toString(36).substring(2, 15);
 
@@ -30,14 +30,6 @@ function Animator (element, config) {
             'play-state': 'running',
         },
     };
-
-    this.duration = function(param) { this.parameter ('duration', param); return this;};
-    this.effect = function(param) { this.parameter ('timing-function', param); return this;};
-    this.delay = function(param) { this.parameter ('delay', param); return this;};
-    this.iteration = function(param) { this.parameter ('iteration-count', param); return this;};
-    this.direction = function(param) { this.parameter ('direction', param); return this;};
-    this.fill = function(param) { this.parameter ('fill-mode', param); return this;};
-    this.state = function(param) { this.parameter ('play-state', param); return this;};
 
     this.parameter = function (key, param) {
         if (this.param.animation[key])
@@ -229,17 +221,24 @@ function Animator (element, config) {
     this._init();
 }
 
+Index.prototype.duration = function(param) { this.parameter ('duration', param); return this;};
+Index.prototype.effect = function(param) { this.parameter ('timing-function', param); return this;};
+Index.prototype.delay = function(param) { this.parameter ('delay', param); return this;};
+Index.prototype.iteration = function(param) { this.parameter ('iteration-count', param); return this;};
+Index.prototype.direction = function(param) { this.parameter ('direction', param); return this;};
+Index.prototype.fill = function(param) { this.parameter ('fill-mode', param); return this;};
+Index.prototype.state = function(param) { this.parameter ('play-state', param); return this;};
 
-Animator.CssValue = function(param, separator, end) {
+
+Index.CssValue = function(param, separator, end) {
     let result = '';
-    separator = separator || Animator.CssValue.SEPARATOR;
-    end = end || Animator.CssValue.VALUE_END;
+    separator = separator || Index.CssValue.SEPARATOR;
+    end = end || Index.CssValue.VALUE_END;
     Object.keys(param).forEach((key) => {
         result += key + separator + param[key] + end
     });
     return result;
 };
-Animator.CssValue.SEPARATOR = '';
-Animator.CssValue.VALUE_END = ' ';
+Index.CssValue.SEPARATOR = '';
+Index.CssValue.VALUE_END = ' ';
 
-window.Animator = Animator;

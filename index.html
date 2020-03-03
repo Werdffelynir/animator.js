@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div id="menu"></div>
+</div>
+<script>
+    const r = fetch('/menu.json').then((r) => r.json() );
+    const menuElement = document.querySelector('#menu');
+
+    r.then((result)=>{
+        const menuItems = result['menu'] ? result['menu'] : {};
+        const ul = document.createElement('ul');
+        Object.keys(menuItems).forEach((k) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = menuItems[k];
+            a.textContent = k;
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+        menuElement.appendChild(ul);
+        console.log('res', result)
+    });
+    r.catch((result)=>{
+        console.log('catch error',result)
+    });
+
+</script>
+</body>
+</html>

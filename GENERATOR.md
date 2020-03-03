@@ -50,10 +50,41 @@ animation: 3s linear 1s slidein;
 animation: 3s slidein;
 */
 ```
-
-
 ==========
+```css
+p {
+  animation-duration: 3s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+}
 
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%; 
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+```
+==========
+```css
+#block {
+  animation-duration: 3s;
+  animation-name: aminate;
+  animation-iteration-count: infinite;
+}
+@keyframes aminate {
+  0% { transform: scaleX(0); }
+  50%   { transform: scaleX(1); }
+  100%   { transform: scaleX(1); }
+}
+
+```
+==========
 
 
 

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two Pages</title>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box}
+        html, body, #app {
+            width: 100%;
+            height: 100%;
+            background: #444444;
+        }
+        /* Base positions */
+        .blocks {
+            width: 50%;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        .block-a {
+            margin-top: 100px;
+            margin-left: 0;
+            z-index: 1000;
+        }
+        .block-b {
+            margin-top: 0;
+            margin-left: 100px;
+            z-index: 990;
+        }
+        .block {
+            width: 500px;
+            height: 700px;
+            background: white;
+            border: 10px solid #171717;
+        }
+        /* Special */
+        .block {
+            position: absolute;
+            transition: all 1s ease;
+        }
+        .block-top {
+            margin-top: 100px;
+            margin-left: 0;
+            z-index: 1000;
+            animation: move 0.7s ease-in-out;
+        }
+        .block-under {
+            margin-top: 0;
+            margin-left: 100px;
+            z-index: 990;
+            animation: move_down 0.7s ease-in-out;
+        }
+
+        @keyframes move {
+            from {
+                margin-top: 0;
+                margin-left: 100px;
+                z-index: 990;
+            }
+            50% {
+                margin-left: 400px;
+            }
+            to {
+                margin-top: 100px;
+                margin-left: 0;
+                z-index: 1000;
+            }
+        }
+
+        @keyframes move_down {
+            from {
+                margin-top: 100px;
+                margin-left: 0;
+            }
+            50% {
+                margin-top: 100px;
+                margin-left: -110px;
+            }
+            to {
+                margin-top: 0;
+                margin-left: 100px;
+            }
+        }
+
+        .header {
+            background: darkred;
+            color: white;
+            transition: all 0.5s ease-in-out;
+        }
+        .button {
+            width: 200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            text-align: center;
+            background: darkred;
+            color: white;
+            border: 3px solid black;
+        }
+        .price{
+            text-align: center;
+        }
+        .price h1{
+            padding: 20px 0;
+            font-size: 28px;
+        }
+        .price h2{
+            padding: 10px 0;
+            font-size: 22px;
+        }
+        .price h3{
+            padding: 10px 0;
+            font-size: 20px;
+            color: darkred;
+        }
+        .price p {
+            margin: 10px auto;
+        }
+        .price .list {
+            text-align: left;
+            padding: 10px 40px;
+        }
+        .price .list li{
+            list-style: decimal;
+        }
+        .sum {
+            color: blueviolet;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="blocks">
+    <div class="block block-a">
+        <div class="price">
+            <div class="header">
+                <h1>WORKTIME CORPORATE</h1>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, unde.</p>
+            <h2>Consectetur adipisicing elit. Dolor, unde</h2>
+
+            <p>WorkTime Corporate is on-premises employee monitoring software, installed on your computers/servers/Citrix/Terminal servers.</p>
+            <p>WorkTime Corporate keeps all monitored data within your location.</p>
+            <h3>30 days FREE fully-featured evaluation.</h3>
+            <div class="sum">399$</div>
+            <div class="button">EVALUATE FREE NOW</div>
+        </div>
+    </div>
+    <div class="block block-b">
+        <div class="price">
+            <div class="header">
+                <h1>WORKTIME CLOUD</h1>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, unde.</p>
+            <h2>Consectetur adipisicing elit. Dolor, unde</h2>
+
+            <p>WorkTime Corporate is on-premises employee monitoring software, installed on your computers/servers/Citrix/Terminal servers.</p>
+            <p>WorkTime Corporate keeps all monitored data within your location.</p>
+            <h3>30 days FREE fully-featured evaluation.</h3>
+            <div class="sum">99$</div>
+            <div class="button">EVALUATE FREE NOW</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function pages(top, under)
+    {
+        top.element.setAttribute('data-name', 'a');
+        under.element.setAttribute('data-name', 'b');
+
+        const setAttr = function (first, second) {
+            first.element.setAttribute('data-top', 'on');
+            second.element.setAttribute('data-top', 'off');
+        };
+
+        const setClasses = function (first, second) {
+            first.element.classList.add('block-top');
+            first.element.classList.remove('block-under');
+            second.element.classList.add('block-under');
+            second.element.classList.remove('block-top');
+        };
+
+        const stack = function (first, second) {
+            setClasses(first, second);
+            setAttr(first, second);
+            first.callback.call(first.callback, first.element, second.element);
+        };
+
+        const toTop = function (e) {
+            const name = e.currentTarget.getAttribute('data-name');
+            if (e.currentTarget.getAttribute('data-top') === 'off') {
+                switch (name) {
+                    case 'a': stack(top, under); break;
+                    case 'b': stack(under, top); break;
+                }
+            }
+        };
+
+        setAttr (top, under);
+        top.element.addEventListener('click', toTop);
+        under.element.addEventListener('click', toTop);
+    }
+
+    function eventBlockA(top, second) {
+        active(top, second);
+    }
+
+    function eventBlockB(top, second) {
+        active(top, second);
+    }
+
+    function active(top, second) {
+        top.querySelector('.header').style.background = 'red';
+        second.querySelector('.header').style.background = '#aaaaaa';
+    }
+
+    const a = document.querySelector('.block-a');
+    const b = document.querySelector('.block-b');
+    active(a, b);
+    pages (
+        {element: a, callback: eventBlockA},
+        {element: b, callback: eventBlockB});
+</script>
+</body>
+</html>

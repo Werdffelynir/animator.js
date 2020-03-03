@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/demo/css/grid.css">
+    <script src="../dist/cssanimator.bundle.js"></script>
+
+    <style></style>
+</head>
+<body>
+<div id="app">
+
+</div>
+<script>
+    const one = document.querySelector('.box-1');
+    const two = document.querySelector('.box-2');
+
+
+    // element one
+    const oneAnim = new Animator(one);
+    oneAnim.duration('2s');
+    oneAnim.iteration('infinite');
+    oneAnim.from({ });
+    oneAnim.step('50%', { });
+    oneAnim.to({});
+    oneAnim.run();
+
+</script>
+</body>
+</html>

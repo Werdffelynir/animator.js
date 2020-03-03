@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/demo/css/grid.css">
+    <link rel="stylesheet" href="/demo/css/simples.css">
+
+    <script src="../dist/cssanimator.bundle.js"></script>
+    <script src="/demo/js/simples.js"></script>
+
+    <style>
+        html, body, #app {
+            width: 100%;
+            height: 100%;
+            background: #3a3a3a;
+        }
+        #panel {
+            height: 30px;
+            background: #444444;
+            border-bottom: 1px solid #545454;
+            color: #2de900;
+        }
+
+        #canvas {
+            width: 80vw;
+            height: calc(100% - 30px);
+            background: white;
+            position: absolute;
+            margin-left: 10vw;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border: 10px solid #292929;
+            outline: 5px solid #515151;
+        }
+        .box-1, .box-2 {
+            background: rgba(71, 39, 104, 0.51);
+            margin-top: calc(50vh - 30px);
+            margin-left: calc(40vw );
+        }
+        .box-2 {
+            margin-left: calc(40vw - 110px);
+        }
+
+        .box-3, .box-4 {
+            background: rgba(71, 39, 104, 0.51);
+            margin-top: calc(50vh - 30px - 100px);
+            margin-left: calc(40vw - 100px);
+        }
+        .box-4 {
+            margin-left: calc(40vw - 0px);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="panel">
+        <button onclick="onStart()">Start</button>
+        <button onclick="onStop()">Stop</button>
+        <button onclick="onRestart()">Restart</button>
+        <button onclick="onPause()">Pause</button>
+    </div>
+    <div id="canvas">
+        <div class="box box-1"></div>
+        <div class="box box-2"></div>
+        <div class="box box-3"></div>
+        <div class="box box-4"></div>
+    </div>
+</div>
+<script>
+    const ams = [];
+
+    Array.from('1234').forEach((v, i) => {
+        const am = new Animator(document.querySelector('.box-' + (i + 1)));
+        am.duration('2s');
+        am.iteration('infinite');
+        am.from({
+            'transform': 'rotate(0deg)',
+        });
+        am.step('50%', {
+            'transform': Animator.CssValue({
+                scaleX: '(0.8)',
+                scaleY: '(0.8)',
+                rotate: '('+ (i * 60) +'deg)',
+            }),
+        });
+        am.to({
+            'transform': 'rotate(180deg)',
+        });
+        am.run();
+        ams.push(am);
+    });
+
+    function onStart() {
+        ams.forEach((am)=>{am.run()});
+    }
+    function onStop() {
+        ams.forEach((am)=>{am.stop()});
+    }
+    function onRestart() {
+        ams.forEach((am)=>{am.stop()});
+        setTimeout(() => {
+            ams.forEach((am)=>{am.run()});
+        }, 100)
+    }
+    function onPause() {
+        ams.forEach((am)=>{am.pause()});
+    }
+
+/*
+    // element one
+    const oneAnim = new Animator(one);
+    oneAnim.duration('2s');
+    oneAnim.iteration('infinite');
+    oneAnim.from({
+        'transform': 'rotate(0deg)',
+    });
+    oneAnim.step('50%', {
+        'transform': Animator.CssValue({
+            scaleX: '(0.8)',
+            scaleY: '(0.8)',
+            rotate: '(180deg)',
+        }),
+    });
+    oneAnim.to({
+        'transform': 'rotate(180deg)',
+    });
+    oneAnim.run();
+
+
+
+    // element two
+    const twoAnim = Animator(two);
+    twoAnim.duration('2s');
+    twoAnim.iteration('infinite');
+    twoAnim.from({
+        'transform': 'rotate(0deg)',
+    });
+    twoAnim.step('50%', {
+        'transform': Animator.CssValue({
+            scaleX: '(0.8)',
+            scaleY: '(0.8)',
+            rotate: '(-180deg)',
+        }),
+    });
+    twoAnim.to({
+        'transform': 'rotate(-180deg)',
+    });
+    twoAnim.run();
+
+
+
+    // actions
+    */
+</script>
+</body>
+</html>

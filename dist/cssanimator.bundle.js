@@ -1,1 +1,373 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var i=e[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(r,i,function(e){return t[e]}.bind(null,i));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,n){"use strict";function r(t,e){if(!(this instanceof r))return new r(t,e||{});if(!(t instanceof Node))throw new Error("Element is not NodeElement");var n=Math.random().toString(36).substring(2,15);this.param={element:t,classNameStyleElement:"style-"+n,classNameElement:"element-"+n,keyframesName:"move-"+n,keyframes:{from:{},to:{},percents:{}},stylesHead:"",stylesElement:{},stylesElementDefault:{},afters:[],timerHandler:null,animation:{name:"none",duration:"1s","timing-function":"ease-in-out",delay:"0s","iteration-count":1,direction:"normal","fill-mode":"none","play-state":"running"}},this.parameter=function(t,e){return this.param.animation[t]&&(this.param.animation[t]=e),this},this.from=function(t){return this.param.keyframes.from=t,this},this.to=function(t){return this.param.keyframes.to=t,this},this.step=function(t,e){return this.param.keyframes.percents[t]=e,this},this.after=function(t){return this.param.afters.push(t),this},this.run=function(){return this._cssRemove(),this._cssCreate(),this._cssInsert(),this._runAfter(),this},this.stop=function(){return this._cssRemove(),this._cssElementRemove(),this},this.pause=function(){return this.isInit()&&("running"===this._elementComputedStyle("animation-play-state")?(this._addStyle2Element("animation-play-state","paused"),this._runAfterTimerHandlerClear()):(this._addStyle2Element("animation-play-state","running"),this._runAfter()),this._cssElementInsert()),this},this.isInit=function(){return!!document.querySelector("."+this.param.classNameStyleElement)},this._runAfterTimerHandlerClear=function(){clearTimeout(this.param.timerHandler)},this._runAfter=function(){var t=this,e=this.param,n=(e.element,e.animation),r=(e.timerHandler,e.afters),i=n.duration.indexOf("s")?1e3*parseInt(n.duration):parseInt(n.duration),s=n.delay.indexOf("s")?1e3*parseInt(n.delay):parseInt(n.delay);this._runAfterTimerHandlerClear(),-1===this.param.animation["iteration-count"].indexOf("infinite")&&(this.param.timerHandler=setTimeout((function(){r.forEach((function(t){t.run()})),t._cssRemove()}),i+s))},this._cssCreate=function(){var t=this.param,e=t.keyframes,n=t.keyframesName,r=t.classNameElement,i=t.animation,a={},o="";return o+=s("from",e.from),o+=s("to",e.to),Object.keys(e.percents).forEach((function(t){o+=s(t,e.percents[t])})),o="@keyframes "+n+" {\n"+o+"}\n",i.name=n,Object.keys(i).forEach((function(t){a["animation-"+t]=i[t]})),o+=s("."+r,a),this.param.stylesHead=o,o},this._cssInsert=function(){var t=this.param,e=t.element,n=t.classNameElement,r=t.classNameStyleElement,s=t.stylesHead;if(!i("."+n)&&!i("."+r)){var a=document.createElement("style");e.classList.add(n),a.classList.add(r),a.textContent=s,document.head.appendChild(a)}},this._cssRemove=function(){var t=this.param,e=t.element,n=t.classNameElement,r=t.classNameStyleElement,s=i("."+r);s&&(document.head.removeChild(s),e.classList.remove(n))},this._cssElementRead=function(){var t=this.param.element.getAttribute("style");if(t){var e={};t.split(";").forEach((function(t){var n=(t=t.trim()).trim().split(":");n&&2===n.length&&(e[n[0].trim()]=n[1].trim())})),this.param.stylesElementDefault=e}},this._cssElementInsert=function(){var t=this.param,e=t.element,n=t.stylesElement,r=t.stylesElementDefault,i="";Object.keys(r).forEach((function(t){i+=t+": "+r[t]+";"})),Object.keys(n).forEach((function(t){i+=t+": "+n[t]+";"})),e.setAttribute("style",i)},this._cssElementRemove=function(){var t=this.param,e=t.element,n=t.stylesElementDefault,r="";Object.keys(n).forEach((function(t){r+=t+": "+n[t]+";"})),e.setAttribute("style",r)},this._elementComputedStyle=function(t){return getComputedStyle(this.param.element)[t]},this._addStyle2Element=function(t,e){t&&e&&(this.param.stylesElement[t]=e)},this._init=function(){this._cssElementRead()};var i=function(t){return document.querySelector(t)},s=function(t,e){var n="";return Object.keys(e).forEach((function(t){n+=t+": "+e[t]+";\n"})),t+" {\n"+n+"}\n"};this._init()}r.prototype.duration=function(t){return this.parameter("duration",t),this},r.prototype.effect=function(t){return this.parameter("timing-function",t),this},r.prototype.delay=function(t){return this.parameter("delay",t),this},r.prototype.iteration=function(t){return this.parameter("iteration-count",t),this},r.prototype.direction=function(t){return this.parameter("direction",t),this},r.prototype.fill=function(t){return this.parameter("fill-mode",t),this},r.prototype.state=function(t){return this.parameter("play-state",t),this},r.CssValue=function(t,e,n){var i="";return e=e||r.CssValue.SEPARATOR,n=n||r.CssValue.VALUE_END,Object.keys(t).forEach((function(r){i+=r+e+t[r]+n})),i},r.CssValue.SEPARATOR="",r.CssValue.VALUE_END=" "}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function Animator(element, config) {
+    if (!(this instanceof Animator)) return new Animator(element, config || {});
+
+    if (!(element instanceof Node)) throw new Error('Animator say: target is not NodeElement');
+
+    var id = Math.random().toString(36).substring(2, 15);
+
+    this.param = {
+        element: element,
+        classNameStyleElement: 'style-' + id,
+        classNameElement: 'element-' + id,
+        keyframesName: 'move-' + id,
+        keyframes: { from: {}, to: {}, percents: {} },
+        stylesHead: '',
+        stylesElement: {},
+        stylesElementDefault: {},
+        afters: [],
+        timerHandler: null,
+        animation: {
+            'name': 'none',
+            'duration': '1s',
+            'timing-function': 'ease-in-out',
+            'delay': '0s',
+            'iteration-count': 1,
+            'direction': 'normal',
+            'fill-mode': 'none',
+            'play-state': 'running'
+        }
+    };
+
+    this.duration = function (param) {
+        this.parameter('duration', param);return this;
+    };
+    this.effect = function (param) {
+        this.parameter('timing-function', param);return this;
+    };
+    this.delay = function (param) {
+        this.parameter('delay', param);return this;
+    };
+    this.iteration = function (param) {
+        this.parameter('iteration-count', param);return this;
+    };
+    this.direction = function (param) {
+        this.parameter('direction', param);return this;
+    };
+    this.fill = function (param) {
+        this.parameter('fill-mode', param);return this;
+    };
+    this.state = function (param) {
+        this.parameter('play-state', param);return this;
+    };
+
+    this.parameter = function (key, param) {
+        if (this.param.animation[key]) this.param.animation[key] = param;
+        return this;
+    };
+
+    this.from = function (params) {
+        this.param.keyframes.from = params;
+        return this;
+    };
+
+    this.to = function (params) {
+        this.param.keyframes.to = params;
+        return this;
+    };
+
+    this.step = function (percent, params) {
+        this.param.keyframes.percents[percent] = params;
+        return this;
+    };
+
+    this.after = function (move) {
+        this.param.afters.push(move);
+        return this;
+    };
+
+    this.run = function () {
+        this._cssRemove();
+        this._cssCreate();
+        this._cssInsert();
+        this._runAfter();
+        return this;
+    };
+
+    this.stop = function () {
+        this._cssRemove();
+        this._cssElementRemove();
+        return this;
+    };
+
+    this.pause = function () {
+        if (this.isInit()) {
+            if (this._elementComputedStyle('animation-play-state') === 'running') {
+                this._addStyle2Element('animation-play-state', 'paused');
+                this._runAfterTimerHandlerClear();
+            } else {
+                this._addStyle2Element('animation-play-state', 'running');
+                this._runAfter();
+            }
+            this._cssElementInsert();
+        }
+        return this;
+    };
+
+    this.isInit = function () {
+        return !!document.querySelector('.' + this.param.classNameStyleElement);
+    };
+
+    /* Internal */
+    this._runAfterTimerHandlerClear = function () {
+        clearTimeout(this.param.timerHandler);
+    };
+    this._runAfter = function () {
+        var _this = this;
+
+        var _param = this.param,
+            element = _param.element,
+            animation = _param.animation,
+            timerHandler = _param.timerHandler,
+            afters = _param.afters;
+
+        var sec = animation.duration.indexOf('s') ? parseInt(animation.duration) * 1000 : parseInt(animation.duration);
+
+        var delay = animation.delay.indexOf('s') ? parseInt(animation.delay) * 1000 : parseInt(animation.delay);
+
+        this._runAfterTimerHandlerClear();
+        if (this.param.animation['iteration-count'].indexOf('infinite') === -1) this.param.timerHandler = setTimeout(function () {
+            afters.forEach(function (callback) {
+                callback.run();
+            });
+            // todo: test for removed style
+            _this._cssRemove();
+        }, sec + delay);
+    };
+    this._cssCreate = function () {
+        var _param2 = this.param,
+            keyframes = _param2.keyframes,
+            keyframesName = _param2.keyframesName,
+            classNameElement = _param2.classNameElement,
+            animation = _param2.animation;
+
+        var animationCSS = {};
+        var style = '';
+
+        style += cssPart('from', keyframes.from);
+        style += cssPart('to', keyframes.to);
+        Object.keys(keyframes.percents).forEach(function (key) {
+            style += cssPart(key, keyframes.percents[key]);
+        });
+        style = '@keyframes ' + keyframesName + ' {\n' + style + '}\n';
+
+        animation.name = keyframesName;
+        Object.keys(animation).forEach(function (k) {
+            animationCSS['animation-' + k] = animation[k];
+        });
+        style += cssPart('.' + classNameElement, animationCSS);
+
+        this.param.stylesHead = style;
+        return style;
+    };
+    this._cssInsert = function () {
+        var _param3 = this.param,
+            element = _param3.element,
+            classNameElement = _param3.classNameElement,
+            classNameStyleElement = _param3.classNameStyleElement,
+            stylesHead = _param3.stylesHead;
+
+        if (!query('.' + classNameElement) && !query('.' + classNameStyleElement)) {
+            var style = document.createElement('style');
+            element.classList.add(classNameElement);
+            style.classList.add(classNameStyleElement);
+            style.textContent = stylesHead;
+            document.head.appendChild(style);
+        }
+    };
+    this._cssRemove = function () {
+        var _param4 = this.param,
+            element = _param4.element,
+            classNameElement = _param4.classNameElement,
+            classNameStyleElement = _param4.classNameStyleElement;
+
+        var style = query('.' + classNameStyleElement);
+        if (style) {
+            document.head.removeChild(style);
+            element.classList.remove(classNameElement);
+        }
+    };
+    this._cssElementRead = function () {
+        var attr = this.param.element.getAttribute('style');
+        if (attr) {
+            var result = {};
+            var attrArr = attr.split(';');
+            attrArr.forEach(function (it) {
+                it = it.trim();
+                var itArr = it.trim().split(':');
+                if (itArr && itArr.length === 2) {
+                    result[itArr[0].trim()] = itArr[1].trim();
+                }
+            });
+            this.param.stylesElementDefault = result;
+        }
+    };
+    this._cssElementInsert = function () {
+        var _param5 = this.param,
+            element = _param5.element,
+            stylesElement = _param5.stylesElement,
+            stylesElementDefault = _param5.stylesElementDefault;
+
+        var style = '';
+        Object.keys(stylesElementDefault).forEach(function (key) {
+            style += key + ': ' + stylesElementDefault[key] + ';';
+        });
+        Object.keys(stylesElement).forEach(function (key) {
+            style += key + ': ' + stylesElement[key] + ';';
+        });
+        element.setAttribute('style', style);
+    };
+    this._cssElementRemove = function () {
+        var _param6 = this.param,
+            element = _param6.element,
+            stylesElementDefault = _param6.stylesElementDefault;
+
+        var style = '';
+        Object.keys(stylesElementDefault).forEach(function (key) {
+            style += key + ': ' + stylesElementDefault[key] + ';';
+        });
+        element.setAttribute('style', style);
+    };
+    this._elementComputedStyle = function (name) {
+        return getComputedStyle(this.param.element)[name];
+    };
+    this._addStyle2Element = function (name, prop) {
+        if (name && prop) this.param.stylesElement[name] = prop;
+    };
+
+    this._init = function () {
+        this._cssElementRead();
+    };
+
+    /* Utils */
+    var query = function query(selector) {
+        return document.querySelector(selector);
+    };
+    var attr = function attr(element, _attr, value) {
+        if (value !== undefined) return element.setAttribute(_attr, value);else return element.getAttribute(_attr);
+    };
+    var cssPart = function cssPart(name, params) {
+        var style = '';
+        Object.keys(params).forEach(function (key) {
+            style += key + ': ' + params[key] + ';\n';
+        });
+        return name + ' {\n' + style + '}\n';
+    };
+
+    this._init();
+}
+
+Animator.CssValue = function (param, separator, end) {
+    var result = '';
+    separator = separator || Animator.CssValue.SEPARATOR;
+    end = end || Animator.CssValue.VALUE_END;
+    Object.keys(param).forEach(function (key) {
+        result += key + separator + param[key] + end;
+    });
+    return result;
+};
+Animator.CssValue.SEPARATOR = '';
+Animator.CssValue.VALUE_END = ' ';
+
+window.Animator = Animator;
+
+/***/ })
+
+/******/ });
